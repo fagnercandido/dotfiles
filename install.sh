@@ -15,8 +15,12 @@ taskshell() {
     sudo apt -y full-upgrade
     sudo apt install -y aptitude
     sudo aptitude install -y `cat dependencies.txt`
+
+    # Change the shell to zsh
+	echo "[INFO] Changing the shell of this user to use zsh...";
+	chsh -s $(which zsh)
+
     sudo systemctl enable --now docker
-    sudo groupadd docker
     sudo usermod -aG docker $USER
 }
 
@@ -104,7 +108,7 @@ taskasdf() {
 
 	echo '. $HOME/.asdf/asdf.sh' >> ~/.zshrc
 	echo '. $HOME/.asdf/completions/asdf.bash' >> ~/.zshrc
-	source ~/.bashrc
+	source ~/.zshrc
 
 	# Install required software for ASDF builds
 	echo "[INFO] Installing required software for ASDF builds...";
