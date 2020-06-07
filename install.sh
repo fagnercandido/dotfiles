@@ -20,6 +20,11 @@ taskshell() {
 	echo "[INFO] Changing the shell of this user to use zsh...";
 	chsh -s $(which zsh)
 
+    # Install Oh My Zsh!
+	echo "[INFO] Installing Oh My Zsh...";
+	curl -L http://install.ohmyz.sh | sh
+	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh-custom/plugins/zsh-syntax-highlighting
+
     sudo systemctl enable --now docker
     sudo usermod -aG docker $USER
 }
@@ -47,16 +52,12 @@ tasktmux(){
     ln -sf $BASEDIR/tmux.conf ~/.tmux.conf
 }
 
-taskzsh(){
+taskzinit(){
     echo '
     ----------
-    - Zsh
+    - ZInit
     ----------
     '
-    if [ ! -d ~/.oh-my-zsh ]; then
-        echo 'Installing Oh My Zsh'
-        sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    fi
     if [ ! -d ~/.zinit ]; then
         echo 'Installing Zinit'
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
@@ -120,7 +121,6 @@ taskasdf() {
 
 	# Install useful plugins (at least for me :D)
 	echo "[INFO] Installing asdf plugins...";
-	source $HOME/.asdf/asdf.sh;
 
 	asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git;
 	asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git;
@@ -137,7 +137,7 @@ if [ $# -eq 0 ]; then
     taskshell
     tasksnap
     tasktmux
-    taskzsh
+    taskzinit
     taskfzf
     taskvim
     taskasdf
