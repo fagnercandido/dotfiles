@@ -13,6 +13,7 @@ git-core
 build-essential
 exuberant-ctags
 ncurses-term
+python-jinja2
 cmake
 xterm
 curl
