@@ -15,33 +15,23 @@ taskshell() {
     sudo apt -y full-upgrade
     sudo apt install -y aptitude
     sudo aptitude install -y `cat dependencies.txt`
-
-    sudo gpasswd -a $USER docker
+    sudo systemctl enable --now docker
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
 }
 
 tasksnap() {
-    sudo snap refresh
-    sudo snap install code --classic
-    sudo snap install gitkraken --classic
-}
-
-taskterminator(){
     echo '
     ----------
-    - Terminator
+    - Snap
     ----------
     '
-    if [ ! -d ~/.config/terminator ]; then
-        mkdir -p ~/.config/terminator
-    fi
-    ln -sf $PWD/terminator_config ~/.config/terminator/config
-
-    # Font
-    if [ ! -d ~/.fonts/Hack ]; then
-        mkdir -p ~/.fonts/Hack && cd ~/.fonts/Hack
-        wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Hack.zip
-        unzip Hack.zip
-    fi
+    sudo snap refresh
+    sudo snap install code --classic
+    sudo snap install skype --classic
+    sudo snap install spotify
+    sudo snap install exercism
+    sudo snap install insomnia
 }
 
 tasktmux(){
@@ -60,11 +50,11 @@ taskzsh(){
     ----------
     '
     if [ ! -d ~/.oh-my-zsh ]; then
-        echo 'Instalando Oh My Zsh'
+        echo 'Installing Oh My Zsh'
         sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     fi
     if [ ! -d ~/.zinit ]; then
-        echo 'Instalando Zinit'
+        echo 'Installing Zinit'
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
     fi
     ln -sf $BASEDIR/zshrc ~/.zshrc
@@ -81,35 +71,6 @@ taskfzf(){
     fi
     git -C ~/.fzf pull
     ~/.fzf/install --all
-}
-
-taskpython(){
-    echo '
-    ----------
-    - Python
-    ----------
-    '
-    sudo -E pip3 install `cat dependencies-python.txt`
-}
-
-tasknodejs(){
-    echo '
-    ----------
-    - NodeJS
-    ----------
-    '
-    if [ ! -d ~/.nvm ]; then
-        echo 'Install NVM'
-        wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-    fi
-
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-    nvm install --lts
-    npm install -g npm
-    npm install -g `cat dependencies-nodejs.txt`
 }
 
 taskvim(){
@@ -132,16 +93,46 @@ taskvim(){
     ./install.py --tern-completer --js-completer --java-completer
 }
 
+taskasdf() {
+	echo '
+    ----------
+    - ASDF
+    ----------
+    '
+	echo "[INFO] Cloning asdf repository...";
+	git clone https://github.com/asdf-vm/asdf.git ~/.asdf;
+
+	echo '. $HOME/.asdf/asdf.sh' >> ~/.zshrc
+	echo '. $HOME/.asdf/completions/asdf.bash' >> ~/.zshrc
+	source ~/.bashrc
+
+	# Install required software for ASDF builds
+	echo "[INFO] Installing required software for ASDF builds...";
+	sudo apt-get install -y git-core curl wget build-essential autoconf unzip libssl-dev libncurses5-dev libreadline-dev zlib1g-dev libsqlite3-dev inotify-tools pkg-config
+
+	# Install useful plugins (at least for me :D)
+	echo "[INFO] Installing asdf plugins...";
+	source $HOME/.asdf/asdf.sh;
+
+	asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git;
+	asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git;
+	bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring;
+	asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git;
+	asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git;
+	asdf plugin-add java https://github.com/halcyon/asdf-java.git;
+    asdf plugin-add golang https://github.com/kennyp/asdf-golang.git;
+    asdf plugin-add gradle https://github.com/rfrancis/asdf-gradle.git;
+    asdf plugin-add maven;
+}
+
 if [ $# -eq 0 ]; then
     taskshell
     tasksnap
-    taskterminator
     tasktmux
     taskzsh
     taskfzf
-    taskpython
-    tasknodejs
     taskvim
+    taskasdf
 fi
 
 for PARAM in $*
@@ -154,9 +145,6 @@ do
         'snap')
             tasksnap
             ;;
-        'terminator')
-            taskterminator
-            ;;
         'tmux')
             tasktmux
             ;;
@@ -166,17 +154,14 @@ do
         'fzf')
             taskfzf
             ;;
-        'python')
-            taskpython
-            ;;
-        'nodejs')
-            tasknodejs
-            ;;
         'vim')
             taskvim
             ;;
+        'asdf')
+            taskasdf
+            ;;
         *)
-            echo "Não existe esta opção! " $PARAM "\n"
+            echo "This option doens't exist! " $PARAM "\n"
             ;;
     esac
 done

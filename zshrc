@@ -77,6 +77,14 @@ plugins=(
     docker-compose
     systemd
     bgnotify
+    ansible
+	asdf
+	aws
+	docker
+	heroku
+	kubectl
+	mvn
+	python
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -126,8 +134,3 @@ zinit light zsh-users/zsh-autosuggestions
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

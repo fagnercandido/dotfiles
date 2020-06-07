@@ -1,5 +1,0 @@
-pip
-setuptools
-ipython<6
-ipdb
-virtualenv
