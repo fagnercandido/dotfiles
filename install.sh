@@ -120,17 +120,17 @@ taskasdf() {
 	# Install useful plugins (at least for me :D)
 	echo "[INFO] Installing asdf plugins...";
 
-    
+    zsh    
 
-	zsh asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git;
-	zsh asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git;
-	zsh bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring;
-	zsh asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git;
-	zsh asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git;
-	zsh asdf plugin-add java https://github.com/halcyon/asdf-java.git;
-    zsh asdf plugin-add golang https://github.com/kennyp/asdf-golang.git;
-    zsh asdf plugin-add gradle https://github.com/rfrancis/asdf-gradle.git;
-    zsh asdf plugin-add maven;
+	asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git;
+	asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git;
+	bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring;
+	asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git;
+	asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git;
+	asdf plugin-add java https://github.com/halcyon/asdf-java.git;
+    asdf plugin-add golang https://github.com/kennyp/asdf-golang.git;
+    asdf plugin-add gradle https://github.com/rfrancis/asdf-gradle.git;
+    asdf plugin-add maven;
 }
 
 if [ $# -eq 0 ]; then
