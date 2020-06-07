@@ -114,6 +114,7 @@ taskasdf() {
 	echo '. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
 	source ~/.zshrc
     source ~/.bashrc
+    source $HOME/.asdf/asdf.sh;
 
 	# Install required software for ASDF builds
 	echo "[INFO] Installing required software for ASDF builds...";
