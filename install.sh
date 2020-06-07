@@ -20,11 +20,6 @@ taskshell() {
 	echo "[INFO] Changing the shell of this user to use zsh...";
 	chsh -s $(which zsh)
 
-    # Install Oh My Zsh!
-	echo "[INFO] Installing Oh My Zsh...";
-	curl -L http://install.ohmyz.sh | sh
-	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh-custom/plugins/zsh-syntax-highlighting
-
     sudo systemctl enable --now docker
     sudo usermod -aG docker $USER
 }
@@ -52,16 +47,21 @@ tasktmux(){
     ln -sf $BASEDIR/tmux.conf ~/.tmux.conf
 }
 
-taskzinit(){
+taskzsh(){
     echo '
     ----------
-    - ZInit
+    - ZSH
     ----------
     '
-    if [ ! -d ~/.zinit ]; then
-        echo 'Installing Zinit'
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
-    fi
+    # Install Oh My Zsh!
+	echo "[INFO] Installing Oh My Zsh...";
+	curl -L http://install.ohmyz.sh | sh
+	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh-custom/plugins/zsh-syntax-highlighting
+    
+    
+    echo 'Installing Zinit'
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
+
     ln -sf $BASEDIR/zshrc ~/.zshrc
 }
 
@@ -110,10 +110,7 @@ taskasdf() {
 	echo '. $HOME/.asdf/asdf.sh' >> ~/.zshrc
 	echo '. $HOME/.asdf/completions/asdf.bash' >> ~/.zshrc
 
-    echo '. $HOME/.asdf/asdf.sh' >> ~/.bashrc
-	echo '. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
 	source ~/.zshrc
-    source ~/.bashrc
     source $HOME/.asdf/asdf.sh;
 
 	# Install required software for ASDF builds
@@ -122,6 +119,8 @@ taskasdf() {
 
 	# Install useful plugins (at least for me :D)
 	echo "[INFO] Installing asdf plugins...";
+
+    chsh -s $(which zsh)
 
 	asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git;
 	asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git;
@@ -138,7 +137,7 @@ if [ $# -eq 0 ]; then
     taskshell
     tasksnap
     tasktmux
-    taskzinit
+    taskzsh
     taskfzf
     taskvim
     taskasdf
