@@ -104,18 +104,13 @@ taskasdf() {
     - ASDF
     ----------
     '
+	# Clone repository
 	echo "[INFO] Cloning asdf repository...";
 	git clone https://github.com/asdf-vm/asdf.git ~/.asdf;
 
-	echo '. $HOME/.asdf/asdf.sh' >> ~/.zshrc
-	echo '. $HOME/.asdf/completions/asdf.bash' >> ~/.zshrc
-
-    echo '. $HOME/.asdf/asdf.sh' >> ~/.bashrc
+	echo '. $HOME/.asdf/asdf.sh' >> ~/.bashrc
 	echo '. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
-
-    source $HOME/.asdf/asdf.sh;
-	source ~/.zshrc
-    source ~/.bashrc
+	source ~/.bashrc
 
 	# Install required software for ASDF builds
 	echo "[INFO] Installing required software for ASDF builds...";
@@ -123,11 +118,9 @@ taskasdf() {
 
 	# Install useful plugins (at least for me :D)
 	echo "[INFO] Installing asdf plugins...";
-    
-    source ~/.zshrc
-    source ~/.bashrc
+	source $HOME/.asdf/asdf.sh;
 
-	asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git;
+    
 	asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git;
 	bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring;
 	asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git;
