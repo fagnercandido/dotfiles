@@ -124,8 +124,8 @@ taskasdf() {
 	# Install useful plugins (at least for me :D)
 	echo "[INFO] Installing asdf plugins...";
     
-    source .bashrc
-    source .zshrc
+    source ~/.zshrc
+    source ~/.bashrc
 
 	asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git;
 	asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git;
