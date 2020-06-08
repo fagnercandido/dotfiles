@@ -118,9 +118,9 @@ taskasdf() {
 
 	# Install useful plugins (at least for me :D)
 	echo "[INFO] Installing asdf plugins...";
-	source $HOME/.asdf/asdf.sh;
+	source $HOME/.asdf/asdf.sh
 
-    
+
 	asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git;
 	bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring;
 	asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git;
