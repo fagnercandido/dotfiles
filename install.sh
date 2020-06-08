@@ -110,8 +110,12 @@ taskasdf() {
 	echo '. $HOME/.asdf/asdf.sh' >> ~/.zshrc
 	echo '. $HOME/.asdf/completions/asdf.bash' >> ~/.zshrc
 
-	source ~/.zshrc
+    echo '. $HOME/.asdf/asdf.sh' >> ~/.bashrc
+	echo '. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
+
     source $HOME/.asdf/asdf.sh;
+	source ~/.zshrc
+    source ~/.bashrc
 
 	# Install required software for ASDF builds
 	echo "[INFO] Installing required software for ASDF builds...";
@@ -119,8 +123,7 @@ taskasdf() {
 
 	# Install useful plugins (at least for me :D)
 	echo "[INFO] Installing asdf plugins...";
-
-    zsh    
+    
 
 	asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git;
 	asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git;
